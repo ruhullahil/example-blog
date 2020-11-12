@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "bootstrap3",
     'authentication',
     'posts',
 ]
@@ -130,4 +131,8 @@ STATICFILES_DIRS = [str(BASE_DIR / "static")]
 
 
 AUTH_USER_MODEL = 'authentication.User'
+
+LOGIN_REDIRECT_URL = 'all-posts'
+
+LOGOUT_REDIRECT_URL = 'all-posts'
 

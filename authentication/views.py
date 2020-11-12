@@ -1,12 +1,22 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from .register_form import Registerform
 
 
 # LOGIN VIEW ENDPOINT
 
-def login(request):
-    return render(request, 'login.html')
-
-
 def register(request):
-    return render(request, 'register.html')
+    if request.method =='POST': 
+        regestr = Registerform(request.POST)
+
+
+        if regestr.is_valid():
+            post = regestr.save(commit = False)
+            post.set_password(post.password) 
+            post.save()
+            return redirect('login')
+        else:
+            return render(request, "registration.html", {'form':regestr}) 
+    else :
+        form = Registerform(data= None)    
+        return render(request, 'registration.html',{'form': form})

@@ -33,5 +33,14 @@ def posts(request):
 
 
 # POST DETAILS VIEW ENDPOINT
-def post_details(request):
-    return render(request, 'blog-post.html')
+def post_details(request,*args, **kwargs):
+    id = kwargs['post_id']
+    response = serve.get('posts',id)
+    if response ==404:
+        return HttpResponseNotFound('<h1>Faild to request</h1>') 
+    post = response
+    response = serve.get('posts',id,'comments')
+    if response ==404:
+        return HttpResponseNotFound('<h1>Faild to request</h1>')
+    coments = response
+    return render(request, 'blog-post.html',{'post':post,'comments':coments})

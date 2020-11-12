@@ -11,7 +11,7 @@ class service:
     def get(self,*args):
         self.url = self.root+'/'
         for arg in args:
-            self.url +=arg
+            self.url +=str(arg)
             self.url+='/'
         #self.url = self.url[:-1]
         print('--------------------------------'+self.url)

@@ -1,15 +1,18 @@
 from django.shortcuts import render
-import requests
+from django.http import HttpResponseNotFound  
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .service import service
+
 
 
 # POSTS VIEW ENDPOINT
+serve = service(root_url= 'https://jsonplaceholder.typicode.com')
 def posts(request):
-    response = requests.get('https://jsonplaceholder.typicode.com/posts')
-    if response.status_code ==200 :
-        print(response.json())
-        _posts = response.json()
+   
+    response = serve.get('posts')
+    if response !=404:   
+        _posts = response
 
         page = request.GET.get('page', 1)
 
@@ -22,6 +25,10 @@ def posts(request):
             _post = paginator.page(paginator.num_pages)
   
         return render(request, 'blog-listing.html',{"posts":_post})
+
+    return HttpResponseNotFound('<h1>Faild to request</h1>') 
+
+    
     
 
 

@@ -14,7 +14,7 @@ def register(request):
             post = regestr.save(commit = False)
             post.set_password(post.password) 
             post.save()
-            return redirect('login')
+            return redirect('all-posts')
         else:
             return render(request, "registration.html", {'form':regestr}) 
     else :
